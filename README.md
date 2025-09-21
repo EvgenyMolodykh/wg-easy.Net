@@ -1,38 +1,38 @@
 # WireGuard Easy
 
-[![Build & Publish Docker Image to Docker Hub](https://github.com/wg-easy/wg-easy/actions/workflows/deploy.yml/badge.svg?branch=production)](https://github.com/wg-easy/wg-easy/actions/workflows/deploy.yml)
-[![Lint](https://github.com/wg-easy/wg-easy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/wg-easy/wg-easy/actions/workflows/lint.yml)
+[![Сборка и публикация образа Docker в Docker Hub](https://github.com/wg-easy/wg-easy/actions/workflows/deploy.yml/badge.svg?branch=production)](https://github.com/wg-easy/wg-easy/actions/workflows/deploy.yml)
+[![Lint](https://github.com/wg-easy/wg-easy/actions/workflows/lint.yml/badge.svg?branc h=master)](https://github.com/wg-easy/wg-easy/actions/workflows/lint.yml)
 ![Docker](https://img.shields.io/docker/pulls/weejewel/wg-easy.svg)
 [![Sponsor](https://img.shields.io/github/sponsors/weejewel)](https://github.com/sponsors/WeeJeWel)
 ![GitHub Stars](https://img.shields.io/github/stars/wg-easy/wg-easy)
 
-You have found the easiest way to install & manage WireGuard on any Linux host!
+Вы нашли самый простой способ установить и управлять WireGuard на любом хосте Linux!
 
 <p align="center">
-  <img src="./assets/screenshot.png" width="802" />
+<img src="./assets/screenshot.png" width="802" />
 </p>
 
-## Features
+## Возможности
 
-* All-in-one: WireGuard + Web UI.
-* Easy installation, simple to use.
-* List, create, edit, delete, enable & disable clients.
-* Show a client's QR code.
-* Download a client's configuration file.
-* Statistics for which clients are connected.
-* Tx/Rx charts for each connected client.
-* Gravatar support.
+* Всё в одном: WireGuard + веб-интерфейс.
+* Простая установка, простота использования.
+* Список, создание, редактирование, удаление, включение и отключение клиентов.
+* Отображение QR-кода клиента.
+* Загрузка файла конфигурации клиента.
+* Статистика по подключенным клиентам.
+* Графики Tx/Rx для каждого подключенного клиента.
+* Поддержка Gravatar.
 
-## Requirements
+## Требования
 
-* A host with a kernel that supports WireGuard (all modern kernels).
-* A host with Docker installed.
+* Хост с ядром, поддерживающим WireGuard (все современные ядра).
+* Хост с установленным Docker.
 
-## Installation
+## Установка
 
-### 1. Install Docker
+### 1. Установка Docker
 
-If you haven't installed Docker yet, install it by running:
+Если Docker ещё не установлен, установите его, выполнив:
 
 ```bash
 $ curl -sSL https://get.docker.com | sh
@@ -40,65 +40,65 @@ $ sudo usermod -aG docker $(whoami)
 $ exit
 ```
 
-And log in again.
+И войдите снова.
 
-### 2. Run WireGuard Easy
+### 2. Запустите WireGuard Easy
 
-To automatically install & run wg-easy, simply run:
+Чтобы автоматически установить и запустить wg-easy, просто выполните:
 
 <pre>
 $ docker run -d \
-  --name=wg-easy \
-  -e WG_HOST=<b>🚨YOUR_SERVER_IP</b> \
-  -e PASSWORD=<b>🚨YOUR_ADMIN_PASSWORD</b> \
-  -v ~/.wg-easy:/etc/wireguard \
-  -p 51820:51820/udp \
-  -p 51821:51821/tcp \
-  --cap-add=NET_ADMIN \
-  --cap-add=SYS_MODULE \
-  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
-  --sysctl="net.ipv4.ip_forward=1" \
-  --restart unless-stopped \
-  ghcr.io/wg-easy/wg-easy
+--name=wg-easy \
+-e WG_HOST=<b>🚨YOUR_SERVER_IP</b> \
+-e PASSWORD=<b>🚨YOUR_ADMIN_PASSWORD</b> \
+-v ~/.wg-easy:/etc/wireguard \
+-p 51820:51820/udp \
+-p 51821:51821/tcp \
+--cap-add=NET_ADMIN \
+--cap-add=SYS_MODULE \
+--sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+--sysctl="net.ipv4.ip_forward=1" \
+--restart unreliable \
+ghcr.io/wg-easy/wg-easy
 </pre>
 
-> 💡 Replace `YOUR_SERVER_IP` with your WAN IP, or a Dynamic DNS hostname.
-> 
-> 💡 Replace `YOUR_ADMIN_PASSWORD` with a password to log in on the Web UI.
+> 💡 Замените `YOUR_SERVER_IP` на ваш WAN IP-адрес или имя хоста динамического DNS.
+>
+> 💡 Замените `YOUR_ADMIN_PASSWORD` на пароль для входа в веб-интерфейс.
 
-The Web UI will now be available on `http://0.0.0.0:51821`.
+Веб-интерфейс теперь будет доступен по адресу `http://0.0.0.0:51821`.
 
-> 💡 Your configuration files will be saved in `~/.wg-easy`
+> 💡 Ваши файлы конфигурации будут сохранены в `~/.wg-easy`
 
-### 3. Sponsor
+### 3. Спонсор
 
-Are you enjoying this project? [Buy me a beer!](https://github.com/sponsors/WeeJeWel) 🍻
+Вам нравится этот проект? [Угостите меня пивом!](https://github.com/sponsors/WeeJeWel) 🍻
 
-## Options
+## Параметры
 
-These options can be configured by setting environment variables using `-e KEY="VALUE"` in the `docker run` command.
+Эти параметры можно настроить, установив переменные окружения с помощью `-e KEY="VALUE"` в команде `docker run`.
 
-| Env | Default | Example | Description |
+| Окружение | По умолчанию | Пример | Описание |
 | - | - | - | - |
-| `PASSWORD` | - | `foobar123` | When set, requires a password when logging in to the Web UI. |
-| `WG_HOST` | - | `vpn.myserver.com` | The public hostname of your VPN server. |
-| `WG_DEVICE` | `eth0` | `ens6f0` | Ethernet device the wireguard traffic should be forwarded through. |
-| `WG_PORT` | `51820` | `12345` | The public UDP port of your VPN server. WireGuard will always listen on `51820` inside the Docker container. |
-| `WG_MTU` | `null` | `1420` | The MTU the clients will use. Server uses default WG MTU. |
-| `WG_PERSISTENT_KEEPALIVE` | `0` | `25` | Value in seconds to keep the "connection" open. If this value is 0, then connections won't be kept alive. |
-| `WG_DEFAULT_ADDRESS` | `10.8.0.x` | `10.6.0.x` | Clients IP address range. |
-| `WG_DEFAULT_DNS` | `1.1.1.1` | `8.8.8.8, 8.8.4.4` | DNS server clients will use. |
-| `WG_ALLOWED_IPS` | `0.0.0.0/0, ::/0` | `192.168.15.0/24, 10.0.1.0/24` | Allowed IPs clients will use. |
-| `WG_PRE_UP` | `...` | - | See [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L19) for the default value. |
-| `WG_POST_UP` | `...` | `iptables ...` | See [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L20) for the default value. |
-| `WG_PRE_DOWN` | `...` | - | See [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L27) for the default value. |
-| `WG_POST_DOWN` | `...` | `iptables ...` | See [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L28) for the default value. |
+| `PASSWORD` | - | `foobar123` | Если установлено, для входа в веб-интерфейс требуется пароль. |
+| `WG_HOST` | - | `vpn.myserver.com` | Публичное имя хоста вашего VPN-сервера. |
+| `WG_DEVICE` | `eth0` | `ens6f0` | Ethernet-устройство, через которое должен перенаправляться трафик Wireguard. |
+| `WG_PORT` | `51820` | `12345` | Публичный порт UDP вашего VPN-сервера. WireGuard всегда будет прослушивать порт `51820` внутри контейнера Docker. |
+| `WG_MTU` | `null` | `1420` | MTU, который будут использовать клиенты. Сервер использует значение MTU WG по умолчанию. |
+| `WG_PERSISTENT_KEEPALIVE` | `0` | `25` | Значение в секундах, необходимое для поддержания соединения открытым. Если это значение равно 0, соединения не будут поддерживаться. |
+| `WG_DEFAULT_ADDRESS` | `10.8.0.x` | `10.6.0.x` | Диапазон IP-адресов клиентов. |
+| `WG_DEFAULT_DNS` | `1.1.1.1` | `8.8.8.8, 8.8.4.4` | DNS-сервер, который будут использовать клиенты. |
+| `WG_ALLOWED_IPS` | `0.0.0.0/0, ::/0` | `192.168.15.0/24, 10.0.1.0/24` | Разрешенные IP-адреса, которые будут использовать клиенты. |
+| `WG_PRE_UP` | `...` | - | Значение по умолчанию см. в [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L19). |
+| `WG_POST_UP` | `...` | `iptables ...` | Значение по умолчанию см. в [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L20). |
+| `WG_PRE_DOWN` | `...` | - | См. [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L27) для получения значения по умолчанию. |
+| `WG_POST_DOWN` | `...` | `iptables ...` | См. [config.js](https://github.com/wg-easy/wg-easy/blob/master/src/config.js#L28) для получения значения по умолчанию. |
 
-> If you change `WG_PORT`, make sure to also change the exposed port.
+> Если вы меняете `WG_PORT`, обязательно измените и открытый порт.
 
-## Updating
+## Обновление
 
-To update to the latest version, simply run:
+Чтобы обновиться до последней версии, просто выполните:
 
 ```bash
 docker stop wg-easy
@@ -106,9 +106,9 @@ docker rm wg-easy
 docker pull ghcr.io/wg-easy/wg-easy
 ```
 
-And then run the `docker run -d \ ...` command above again.
+Затем снова выполните команду `docker run -d \ ...`, указанную выше.
 
-## Common Use Cases
+## Распространенные примеры использования
 
-* [Using WireGuard-Easy with Pi-Hole](https://github.com/wg-easy/wg-easy/wiki/Using-WireGuard-Easy-with-Pi-Hole)
-* [Using WireGuard-Easy with nginx/SSL](https://github.com/wg-easy/wg-easy/wiki/Using-WireGuard-Easy-with-nginx-SSL)
+* [Использование WireGuard-Easy с Pi-Hole](https://github.com/wg-easy/wg-easy/wiki/Using-WireGuard-Easy-with-Pi-Hole)
+* [Использование WireGuard-Easy с nginx/SSL](https://github.com/wg-easy/wg-easy/wiki/Using-WireGuard-Easy-with-nginx-SSL)
